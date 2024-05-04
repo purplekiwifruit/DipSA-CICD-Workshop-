@@ -1,12 +1,15 @@
 name: my first workflow
 
 on:
-  push
+  push:
+    branches:
+      - "release/v[0-9]+.[0-9]+"
 
 jobs:
 
-  my-first-job:
-
+  my-first-job-security-scan:
+    if: "!contains(github.event.head_commit.message, '#NORUN')"
+    
     runs-on: ubuntu-latest
 
     steps:
@@ -22,12 +25,16 @@ jobs:
           scan-type: 'fs'
           ignore-unfixed: true
           format: 'table'
-          exit-code: '0'
+          exit-code: '1'
           output: 'trivy-results.txt'
-          severity: 'CRITICAL,HIGH'
+          severity: 'CRITICAL'
 
-      - name: Display Trivy scan results
-        run: cat trivy-results.txt
+      - name: Upload Trivy scan results
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with: 
+          name: trivey-results
+          path: trivey-results.txt
 
       - name: Login to Docker Hub
         uses: docker/login-action@v3

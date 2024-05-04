@@ -137,7 +137,7 @@ jobs:
           initial_comment: 'post by slack-upload-file'
       
   
-  # To-Do Tasks: commit to test-submission channel to check to Slack Message Format
+  # To-Do Tasks: commit to test-submission channel to check Slack Message Format
     # 1. Update value of secrets.SLACK_WEBHOOK_URL with test-submission webhook link
     # 2. Update value of secrets.SLACK_TOKEN with the token value provide by Lecturer
     # 3. update value of secrets.SLACK_CHANNEL_ID with test-submission channel id

@@ -137,7 +137,13 @@ jobs:
           initial_comment: 'post by slack-upload-file'
       
   
-  # To-Do Tasks: commit to test-submission channel to check Slack Message Format
-    # 1. Update value of secrets.SLACK_WEBHOOK_URL with test-submission webhook link
-    # 2. Update value of secrets.SLACK_TOKEN with the token value provide by Lecturer
-    # 3. update value of secrets.SLACK_CHANNEL_ID with test-submission channel id
+  # To-Do Tasks: 
+    # 1.commit to test-submission channel to check Slack Message Format
+    # a. Update value of secrets.SLACK_WEBHOOK_URL with test-submission webhook link
+    # b. Update value of secrets.SLACK_TOKEN with the token value provide by Lecturer
+    # c. update value of secrets.SLACK_CHANNEL_ID with test-submission channel id
+
+    # 2. run 2 rounds of trivy scan
+    #  a.  set --> severity: 'HIGH'  for failure case
+    #  b.  set --> severity: 'CRITICAL'  for success case
+

@@ -40,8 +40,40 @@ jobs:
 
       - name: Build and push
         uses: docker/build-push-action@v5
+        id: build-and-push
         with:
           context: .
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/go-fortune:${{ github.sha }}
+      
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@v3.5.0
+
+      - name: Sign image with a key
+        run: |
+          cosign sign --yes --key env://COSIGN_PRIVATE_KEY ${{ secrets.DOCKERHUB_USERNAME }}/go-fortune:${{ github.sha }}
+        env:
+          COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }} 
+
+      # - name: Send notification to Slack workflow
+      #   id: slack
+      #   uses: slackapi/slack-github-action@v1.26.0
+      #   with:
+      #   # For posting a rich message using Block Kit
+      #     payload: |
+      #       {
+      #         "text": "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
+      #         "blocks": [
+      #           {
+      #             "type": "section",
+      #             "text": {
+      #               "type": "mrkdwn",
+      #               "text": "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+      #             }
+      #           }
+      #         ]
+      #       }
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_TESTINGURL }}
+      #     SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK

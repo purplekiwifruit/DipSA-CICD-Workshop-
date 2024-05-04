@@ -33,8 +33,8 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v2
         with: 
-          name: trivey-results
-          path: trivey-results.txt
+          name: trivy-results
+          path: trivy-results.txt
 
   my-second-job-build-docker-image:
     needs: my-first-job-security-scan
@@ -102,10 +102,10 @@ jobs:
       - name: Download Trivey results
         uses: actions/download-artifact@v2
         with:
-            name: tirvy-results
+            name: trivy-results
 
       - name: Display Trivey results
-        run: cat trivey-results.txt
+        run: cat trivy-results.txt
       
       - name: Send Vulnerability Report to Slack workflow
         id: slack
@@ -127,3 +127,12 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+
+      - name: Upload file to Slack
+        uses: MeilCli/slack-upload-file@v4
+        with:
+          slack_token: ${{ secrets.SLACK_TOKEN }}
+          channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
+          file_path: 'trivy-results.txt'
+          initial_comment: 'post by slack-upload-file'
+      

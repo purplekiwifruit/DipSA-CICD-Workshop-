@@ -1,0 +1,14 @@
+name: my first workflow
+
+jobs:
+
+  my-first-job:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      -name: checkout source code
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.base_ref }}
+      

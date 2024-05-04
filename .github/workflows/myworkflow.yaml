@@ -16,10 +16,11 @@ jobs:
           ref: ${{ github.base_ref }}
     
       - name: Run Trivy vulnerability scanner in repo mode
+        id: scan
         uses: aquasecurity/trivy-action@master
         with:
           scan-type: 'fs'
           ignore-unfixed: true
-          format: 'sarif'
-          output: 'trivy-results.sarif'
+          format: 'table'
+          output: 'trivy-results.txt'
           severity: 'HIGH'

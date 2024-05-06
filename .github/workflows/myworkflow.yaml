@@ -80,49 +80,53 @@ jobs:
           payload: |
             {
               "text": "Image Build and Signed",
-              "blocks": [
-              {
-                "type": "header",
-                "text": {
-                  "type": "plain_text",
-                  "text": "${{ github.actor }}",
-                  "emoji": true
-                }
-              },
-              {
-                "type": "section",
-                "fields": [
+              "attchments": [
+                "color" :"#36A64F",
+                "blocks": [
                   {
-                    "type": "mrkdwn",
-                    "text": "*Ref:*\nrefs/heads/v1.0"
+                    "type": "header",
+                    "text": {
+                      "type": "plain_text",
+                      "text": "${{ github.actor }}",
+                      "emoji": true
+                    }
                   },
                   {
-                    "type": "mrkdwn",
-                    "text": "*Event:*\npush"
-                  }
-                ]
-              },
-              {
-                "type": "section",
-                "fields": [
-                  {
-                    "type": "mrkdwn",
-                    "text": "*Actions URL:*\n<${{ github.event.head_commit.url }}|Build and Push>"
+                    "type": "section",
+                    "fields": [
+                      {
+                        "type": "mrkdwn",
+                        "text": "*Ref:*\nrefs/heads/v1.0"
+                      },
+                      {
+                        "type": "mrkdwn",
+                        "text": "*Event:*\npush"
+                      }
+                    ]
                   },
                   {
-                    "type": "mrkdwn",
-                    "text": "*Commit:*\n ${{ github.sha }}"
+                    "type": "section",
+                    "fields": [
+                      {
+                        "type": "mrkdwn",
+                        "text": "*Actions URL:*\n<${{ github.event.head_commit.url }}|Build and Push>"
+                      },
+                      {
+                        "type": "mrkdwn",
+                        "text": "*Commit:*\n<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|${{ steps.shortHead.outputs.sha_short }}>"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": "*Image build and signed*\n*Name:* CAO LEILEI\n*Matriculation Number:* A0291659M\n*Email:* caoleilei0810@gmail.com\n*Repository:* <https://github.com/${{ github.repository }}>\n*Docker Hub URL:* <https://hub.docker.com/r/${{ secrets.DOCKERHUB_USERNAME }}/go-fortune>"
+                    }
                   }
                 ]
-              },
-              {
-                "type": "section",
-                "text": {
-                  "type": "mrkdwn",
-                  "text": "*Image build and signed*\n*Name:* CAO LEILEI\n*Matriculation Number:* A0291659M\n*Email:* caoleilei0810@gmail.com\n*Repository:* <https://github.com/${{ github.repository }}>\n*Docker Hub URL:* <https://hub.docker.com/r/${{ secrets.DOCKERHUB_USERNAME }}/go-fortune>"
-                }
-              }
-            ]
+              ]
+             
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -141,6 +145,10 @@ jobs:
       - name: Display Trivey results
         run: cat trivy-results.txt
       
+      - name: Get short HEAD
+        id: shortHead
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+        
       - name: Send Vulnerability Report to Slack workflow
         id: slack
         uses: slackapi/slack-github-action@v1.26.0
@@ -148,49 +156,53 @@ jobs:
           payload: |
             {
               "text": "Build and Push",
-              "blocks": [
-              {
-                "type": "header",
-                "text": {
-                  "type": "plain_text",
-                  "text": "${{ github.actor }}",
-                  "emoji": true
-                }
-              },
-              {
-                "type": "section",
-                "fields": [
+              "attachments":[
+                "color": "#FF0000",
+                "blocks": [
                   {
-                    "type": "mrkdwn",
-                    "text": "*Ref:*\nrefs/heads/v1.0"
+                    "type": "header",
+                    "text": {
+                      "type": "plain_text",
+                      "text": "${{ github.actor }}",
+                      "emoji": true
+                    }
                   },
                   {
-                    "type": "mrkdwn",
-                    "text": "*Event:*\npush"
-                  }
-                ]
-              },
-              {
-                "type": "section",
-                "fields": [
+                    "type": "section",
+                    "fields": [
+                      {
+                        "type": "mrkdwn",
+                        "text": "*Ref:*\nrefs/heads/v1.0"
+                      },
+                      {
+                        "type": "mrkdwn",
+                        "text": "*Event:*\npush"
+                      }
+                    ]
+                  },.
                   {
-                    "type": "mrkdwn",
-                    "text": "*Actions URL:*\n<https://github.com/purplekiwifruit/DipSA-CICD-Workshop-/actions|Build and Push>"
+                    "type": "section",
+                    "fields": [
+                      {
+                        "type": "mrkdwn",
+                        "text": "*Actions URL:*\n<https://github.com/purplekiwifruit/DipSA-CICD-Workshop-/actions|Build and Push>"
+                      },
+                      {
+                        "type": "mrkdwn",
+                        "text": "*Commit:*\n<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|${{ steps.shortHead.outputs.sha_short }}>"
+                      }
+                    ]
                   },
                   {
-                    "type": "mrkdwn",
-                    "text": "*Commit:*\n ${{ github.sha }}"
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": "*Scan failed - Leilei*\nFailed trivy scan, see uploaded report"
+                    }
                   }
                 ]
-              },
-              {
-                "type": "section",
-                "text": {
-                  "type": "mrkdwn",
-                  "text": "*Scan failed - Leilei*\nFailed trivy scan, see uploaded report"
-                }
-              }
-            ]
+              ]
+              
             }
       
         env:

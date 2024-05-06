@@ -79,7 +79,7 @@ jobs:
         env:
           SLACK_CHANNEL: general
           SLACK_COLOR: good
-          SLACK_MESSAGE: '**Name:** CAO LEILEI\n**Matriculation Number:** A0291659M\n**Email:** caoleilei0810@gmail.com\n**Repository:** <https://github.com/${{ github.repository }}>\n**Docker Hub URL:** <https://hub.docker.com/r/${{ secrets.DOCKERHUB_USERNAME }}/go-fortune>'
+          SLACK_MESSAGE: '**Name:** CAO LEILEI\n**Matriculation:** A0291659M\n**Email:** caoleilei0810@gmail.com\n**Git:** <https://github.com/${{ github.repository }}>\n**Image:** <https://hub.docker.com/r/${{ secrets.DOCKERHUB_USERNAME }}/go-fortune>'
           SLACKIFY_MARKDOWN: true
           SLACK_TITLE: Image build and signed
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -122,13 +122,4 @@ jobs:
           initial_comment: 'Scan report by Leilei'
       
   
-  # To-Do Tasks: 
-    # 1.commit to test-submission channel to check Slack Message Format
-    # a. Update value of secrets.SLACK_WEBHOOK_URL with test-submission webhook link
-    # b. Update value of secrets.SLACK_TOKEN with the token value provide by Lecturer
-    # c. update value of secrets.SLACK_CHANNEL_ID with test-submission channel id
-
-    # 2. run 2 rounds of trivy scan
-    #  a.  set --> severity: 'HIGH'  for failure case
-    #  b.  set --> severity: 'CRITICAL'  for success case
 

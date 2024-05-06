@@ -94,7 +94,7 @@ jobs:
                 "fields": [
                   {
                     "type": "mrkdwn",
-                    "text": "*Ref:*\nrefs/heads/master"
+                    "text": "*Ref:*\nrefs/heads/v1.0"
                   },
                   {
                     "type": "mrkdwn",
@@ -162,7 +162,7 @@ jobs:
                 "fields": [
                   {
                     "type": "mrkdwn",
-                    "text": "*Ref:*\nrefs/heads/master"
+                    "text": "*Ref:*\nrefs/heads/v1.0"
                   },
                   {
                     "type": "mrkdwn",
@@ -175,7 +175,7 @@ jobs:
                 "fields": [
                   {
                     "type": "mrkdwn",
-                    "text": "*Actions URL:*\n<${{ github.event.head_commit.url }}|Build and Push>"
+                    "text": "*Actions URL:*\n<https://github.com/purplekiwifruit/DipSA-CICD-Workshop-/actions|Build and Push>"
                   },
                   {
                     "type": "mrkdwn",
@@ -187,7 +187,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*Scan failed - Lena*\nFailed trivy scan, see uploaded report"
+                  "text": "*Scan failed - Leilei*\nFailed trivy scan, see uploaded report"
                 }
               }
             ]
@@ -203,7 +203,7 @@ jobs:
           slack_token: ${{ secrets.SLACK_TOKEN }}
           channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
           file_path: 'trivy-results.txt'
-          initial_comment: 'post by slack-upload-file'
+          initial_comment: 'Scan report by Leilei'
       
   
   # To-Do Tasks: 

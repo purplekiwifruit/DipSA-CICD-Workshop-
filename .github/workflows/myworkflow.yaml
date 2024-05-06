@@ -81,14 +81,48 @@ jobs:
             {
               "text": "Image Build and Signed",
               "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "*Name:* CAO LEILEI\n*Matriculation Number:* A0291659M\n*Email:* caoleilei0810@gmail.com\n*Repository:* <https://github.com/${{ github.repository }}>\n*Docker Hub URL:* <https://hub.docker.com/r/${{ secrets.DOCKERHUB_USERNAME }}/go-fortune>"
-                  }
+              {
+                "type": "header",
+                "text": {
+                  "type": "plain_text",
+                  "text": "${{ github.actor }}",
+                  "emoji": true
                 }
-              ]
+              },
+              {
+                "type": "section",
+                "fields": [
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Ref:*\nrefs/heads/master"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Event:*\npush"
+                  }
+                ]
+              },
+              {
+                "type": "section",
+                "fields": [
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Actions URL:*\n<${{ github.event.head_commit.url }}|Build and Push>"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Commit:*\n ${{ github.sha }}"
+                  }
+                ]
+              },
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*Image build and signed*\n*Name:* CAO LEILEI\n*Matriculation Number:* A0291659M\n*Email:* caoleilei0810@gmail.com\n*Repository:* <https://github.com/${{ github.repository }}>\n*Docker Hub URL:* <https://hub.docker.com/r/${{ secrets.DOCKERHUB_USERNAME }}/go-fortune>"
+                }
+              }
+            ]
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -113,17 +147,52 @@ jobs:
         with:
           payload: |
             {
-              "text": "Scan failed - lena. Failed trivy scan, see uploaded report",
+              "text": "Build and Push",
               "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "*Scan failed - Lena*\nFailed trivy scan, see uploaded report\n"
-                  }
+              {
+                "type": "header",
+                "text": {
+                  "type": "plain_text",
+                  "text": "${{ github.actor }}",
+                  "emoji": true
                 }
-              ]
+              },
+              {
+                "type": "section",
+                "fields": [
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Ref:*\nrefs/heads/master"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Event:*\npush"
+                  }
+                ]
+              },
+              {
+                "type": "section",
+                "fields": [
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Actions URL:*\n<${{ github.event.head_commit.url }}|Build and Push>"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Commit:*\n ${{ github.sha }}"
+                  }
+                ]
+              },
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*Scan failed - Lena*\nFailed trivy scan, see uploaded report"
+                }
+              }
+            ]
             }
+      
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK

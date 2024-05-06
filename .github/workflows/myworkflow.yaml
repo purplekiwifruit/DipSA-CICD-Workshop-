@@ -27,7 +27,7 @@ jobs:
           format: 'table'
           exit-code: '1'
           output: 'trivy-results.txt'
-          severity: 'HIGH'
+          severity: 'CRITICAL'
 
       - name: Upload Trivy scan results
         if: failure()
@@ -75,63 +75,14 @@ jobs:
 
       - name: Send notification to Slack workflow
         id: slack
-        uses: slackapi/slack-github-action@v1.26.0
-        with:
-          payload: |
-            {
-              "text": "Image Build and Signed",
-              "attachments": [
-                {
-                  "color": "#36A64F",
-                  "blocks": [
-                    {
-                      "type": "header",
-                      "text": {
-                        "type": "plain_text",
-                        "text": "${{ github.actor }}",
-                        "emoji": true
-                      }
-                    },
-                    {
-                      "type": "section",
-                      "fields": [
-                        {
-                          "type": "mrkdwn",
-                          "text": "*Ref:*\nrefs/heads/v1.0"
-                        },
-                        {
-                          "type": "mrkdwn",
-                          "text": "*Event:*\npush"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "section",
-                      "fields": [
-                        {
-                          "type": "mrkdwn",
-                          "text": "*Actions URL:*\n<${{ github.event.head_commit.url }}|Build and Push>"
-                        },
-                        {
-                          "type": "mrkdwn",
-                          "text": "*Commit:*\n<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|${{ steps.shortHead.outputs.sha_short }}>"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "section",
-                      "text": {
-                        "type": "mrkdwn",
-                        "text": "*Image build and signed*\n*Name:* CAO LEILEI\n*Matriculation Number:* A0291659M\n*Email:* caoleilei0810@gmail.com\n*Repository:* <https://github.com/${{ github.repository }}>\n*Docker Hub URL:* <https://hub.docker.com/r/${{ secrets.DOCKERHUB_USERNAME }}/go-fortune>"
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
+        uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+          SLACK_CHANNEL: general
+          SLACK_COLOR: good
+          SLACK_MESSAGE: '*Name:* CAO LEILEI\n*Matriculation Number:* A0291659M\n*Email:* caoleilei0810@gmail.com\n*Repository:* <https://github.com/${{ github.repository }}>\n*Docker Hub URL:* <https://hub.docker.com/r/${{ secrets.DOCKERHUB_USERNAME }}/go-fortune>'
+          SLACK_TITLE: Image build and signed
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+
   
   my-third-job-report-vulnerability:
     needs: my-first-job-security-scan

@@ -174,7 +174,7 @@ jobs:
                       "fields": [
                         {
                           "type": "mrkdwn",
-                          "text": "*Ref:*\nrefs/heads/v1.0"
+                          "text": "*Ref:*${{github.ref}}"
                         },
                         {
                           "type": "mrkdwn",
@@ -191,7 +191,7 @@ jobs:
                         },
                         {
                           "type": "mrkdwn",
-                          "text": "*Commit:*\n<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|${{ steps.shortHead.outputs.sha_short }}>"
+                          "text": "*Commit:\n${{ steps.shortHead.outputs.sha_short }}"
                         }
                       ]
                     },

@@ -79,7 +79,8 @@ jobs:
         env:
           SLACK_CHANNEL: general
           SLACK_COLOR: good
-          SLACK_MESSAGE: '*Name:* CAO LEILEI\n*Matriculation Number:* A0291659M\n*Email:* caoleilei0810@gmail.com\n*Repository:* <https://github.com/${{ github.repository }}>\n*Docker Hub URL:* <https://hub.docker.com/r/${{ secrets.DOCKERHUB_USERNAME }}/go-fortune>'
+          SLACK_MESSAGE: '**Name:** CAO LEILEI\n**Matriculation Number:** A0291659M\n**Email:** caoleilei0810@gmail.com\n**Repository:** <https://github.com/${{ github.repository }}>\n**Docker Hub URL:** <https://hub.docker.com/r/${{ secrets.DOCKERHUB_USERNAME }}/go-fortune>'
+          SLACKIFY_MARKDOWN: true
           SLACK_TITLE: Image build and signed
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
 

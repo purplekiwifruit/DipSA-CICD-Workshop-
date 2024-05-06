@@ -113,13 +113,13 @@ jobs:
         with:
           payload: |
             {
-              "text": "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
+              "text": "Scan failed - lena. Failed trivy scan, see uploaded report",
               "blocks": [
                 {
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "GitHub Action build result: FAILED\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+                    "text": "*Scan failed - Lena*\nFailed trivy scan, see uploaded report\n"
                   }
                 }
               ]

@@ -146,70 +146,20 @@ jobs:
       - name: Display Trivey results
         run: cat trivy-results.txt
       
-      - name: Get short HEAD
-        id: shortHead
-        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-        
+      - name: Get short commit SHA
+        id: vars
+        run: echo "::set-output name=short_sha::${GITHUB_SHA::6}"
+
       - name: Send Vulnerability Report to Slack workflow
         id: slack
-        uses: slackapi/slack-github-action@v1.26.0
-        with:
-          payload: |
-            {
-              "text": "Build and Push",
-              "attachments": [
-                {
-                  "color": "#FF0000",
-                  "blocks": [
-                    {
-                      "type": "header",
-                      "text": {
-                        "type": "plain_text",
-                        "text": "${{ github.actor }}",
-                        "emoji": true
-                      }
-                    },
-                    {
-                      "type": "section",
-                      "fields": [
-                        {
-                          "type": "mrkdwn",
-                          "text": "*Ref:*${{github.ref}}"
-                        },
-                        {
-                          "type": "mrkdwn",
-                          "text": "*Event:*\npush"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "section",
-                      "fields": [
-                        {
-                          "type": "mrkdwn",
-                          "text": "*Actions URL:*\n<https://github.com/purplekiwifruit/DipSA-CICD-Workshop-/actions|Build and Push>"
-                        },
-                        {
-                          "type": "mrkdwn",
-                          "text": "*Commit:\n${{ steps.shortHead.outputs.sha_short }}"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "section",
-                      "text": {
-                        "type": "mrkdwn",
-                        "text": "*Scan failed - Leilei*\nFailed trivy scan, see uploaded report"
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
-      
+        uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+          SLACK_CHANNEL: general
+          SLACK_COLOR: '#FF0000'
+          SLACK_MESSAGE: 'Failed trivy scan, see uploaded report'
+          SLACK_TITLE: Scan failed - Leilei
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+         
 
       - name: Upload file to Slack workflow
         uses: MeilCli/slack-upload-file@v4

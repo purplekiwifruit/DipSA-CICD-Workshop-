@@ -97,11 +97,7 @@ jobs:
 
       - name: Display Trivey results
         run: cat trivy-results.txt
-      
-      - name: Get short commit SHA
-        id: vars
-        run: echo "::set-output name=short_sha::${GITHUB_SHA::6}"
-
+  
       - name: Send Vulnerability Report to Slack workflow
         id: slack
         uses: rtCamp/action-slack-notify@v2

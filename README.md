@@ -1,7 +1,7 @@
 # CICD Pipeline for Docker Image Build and Security Scan
 
 ## Overview
-This project implements a Continuous Integration/Continuous Deployment (CICD) pipeline using GitHub Actions to automate the processes of building, security scanning, and signing Docker images. It also integrates Slack notifications to keep users informed about the pipeline’s progress and status updates. This pipeline was developed as part of an individual project during a postgraduate course.
+This project implements a Continuous Integration/Continuous Deployment (CICD) pipeline using GitHub Actions to automate the processes of building, security scanning, and signing Docker images. It also integrates Slack notifications to keep users informed about the pipeline’s progress and status updates.
 
 ## How to Use
 ### 1. Pipeline Overview:
